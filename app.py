@@ -3,19 +3,37 @@ from bin.filters import apply_filter
 
 app = Flask(__name__)
 
-# Read the PIL document to find out which filters are available out-of the box
-filters_available = []
+# Read the PIL (Python Imaging Library) documentation to find out which filters are available out-of the box
+filters_available = [
+    "blur",
+    "contour",
+    "detail",
+    "edge_enhance",
+    "edge_enhance_more",
+    "emboss",
+    "find_edges",
+    "sharpen",
+    "smooth",
+    "smooth_more",
+]
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     """
     TODO:
-    1. Return the usage instructions that specifies which filters are available, and the method format
+    1. Return the usage instructions that:
+        a)specifies which filters are available, and
+        b) the method format
     """
-    pass
+    response = {
+        "filters_available": filters_available,
+        "usage": {"http_method": "POST", "URL": "/<filter_available>/"}
+    }
+    return jsonify(response)
 
-
+# the route is expressed as a parameter
+# URL/blur will capture blur as the value of the filter variable
 @app.post("/<filter>")
 def image_filter(filter):
     """
@@ -25,7 +43,19 @@ def image_filter(filter):
     3. Apply the filter using apply_filter() method from bin.filters
     4. Return the filtered image as response
     """
-    pass
+    if filter not in filters_available:
+        response = {"error": "incorrect filter"}
+        return jsonify(response)
+
+    file = request.files["image"]
+
+    if not file:
+        response = {"error": "no file provided"}
+        return jsonify(response)
+
+    filtered_image = apply_filter(file, filter)
+
+    return send_file(filtered_image, mimetype="image/JPEG")
 
 
 if __name__ == "__main__":
