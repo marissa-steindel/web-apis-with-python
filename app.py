@@ -5,17 +5,17 @@ app = Flask(__name__)
 
 # Read the PIL (Python Imaging Library) documentation to find out which filters are available out-of the box
 filters_available = [
-    "blur",
-    "contour",
-    "detail",
-    "edge_enhance",
-    "edge_enhance_more",
-    "emboss",
-    "find_edges",
-    "sharpen",
-    "smooth",
-    "smooth_more",
-]
+                        "blur",
+                        "contour",
+                        "detail",
+                        "edge_enhance",
+                        "edge_enhance_more",
+                        "emboss",
+                        "find_edges",
+                        "sharpen",
+                        "smooth",
+                        "smooth_more",
+                    ]
 
 
 @app.route("/", methods=["GET", "POST"])
