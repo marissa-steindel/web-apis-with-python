@@ -1,6 +1,6 @@
+# import image() and image_filter() methods from the Python Imaging Library (PIL)
 from PIL import Image, ImageFilter
 import io
-
 
 def apply_filter(file: object, filter: str) -> object:
     """
@@ -20,7 +20,11 @@ def apply_filter(file: object, filter: str) -> object:
     image = Image.open(file)
 
     # apply the filter - eg. ImageFilter.BLUR
-    # eval() - converts a string to a python command
+    # eval() - converts a string to a python function call
+    # convert filter provided in URL to uppercase,
+    # then append to ImageFilter.FILTER,
+    # then convert to python command
+    # aka image.filter(ImageFilter.BLUR)
     image = image.filter(eval(f"ImageFilter.{filter.upper()}"))
 
     # convert the filtered PIL image object back to a file
